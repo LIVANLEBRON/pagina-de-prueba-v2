@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de 60 Juegos - MinijuegoLivan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #1A1A1A;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            padding: 1rem;
+        }
+        h1 {
+            text-align: center;
+            color: #00FFFF;
+            text-shadow: 0 0 10px #00FFFF;
+        }
+        h2 {
+            color: #FF00FF;
+            margin: 1rem 0;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #00FFFF;
+        }
+        .game-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .game-card h3 {
+            color: #FFFFFF;
+            margin: 0.5rem 0;
+        }
+        .game-card p {
+            color: #CCCCCC;
+            font-size: 0.9rem;
+        }
+        .play-button {
+            background: linear-gradient(90deg, #00FFFF, #FF00FF);
+            color: #FFFFFF;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .play-button:hover {
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            border-radius: 15px;
+            border: 2px solid #00FFFF;
+        }
+        .modal-header {
+            background: linear-gradient(90deg, #00FFFF, #FF00FF);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            color: #FFFFFF;
+            margin: 0;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .game-iframe {
+            width: 100%;
+            height: calc(80vh - 50px);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prueba de 60 Juegos Nuevos</h1>
+
+    <section>
+        <h2>Acción</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="shell-shockers.jpg" alt="Shell Shockers">
+                <h3>Shell Shockers</h3>
+                <p>Shooter de huevos multijugador.</p>
+                <button class="play-button" onclick="openGameModal('Shell Shockers', 'https://shellshock.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="forward-assault.jpg" alt="Forward Assault Remix">
+                <h3>Forward Assault Remix</h3>
+                <p>FPS táctico.</p>
+                <button class="play-button" onclick="openGameModal('Forward Assault Remix', 'https://www.crazygames.com/embed/forward-assault-remix')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="venge-io.jpg" alt="Venge.io">
+                <h3>Venge.io</h3>
+                <p>Shooter futurista.</p>
+                <button class="play-button" onclick="openGameModal('Venge.io', 'https://venge.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="crazy-shooters-2.jpg" alt="Crazy Shooters 2">
+                <h3>Crazy Shooters 2</h3>
+                <p>Disparos caóticos.</p>
+                <button class="play-button" onclick="openGameModal('Crazy Shooters 2', 'https://www.crazygames.com/embed/crazy-shooters-2')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="repuls-io.jpg" alt="Repuls.io">
+                <h3>Repuls.io</h3>
+                <p>Acción sci-fi.</p>
+                <button class="play-button" onclick="openGameModal('Repuls.io', 'https://repuls.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="war-brokers.jpg" alt="War Brokers">
+                <h3>War Brokers</h3>
+                <p>Combate militar.</p>
+                <button class="play-button" onclick="openGameModal('War Brokers', 'https://warbrokers.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="ninja-clash-heroes.jpg" alt="Ninja Clash Heroes">
+                <h3>Ninja Clash Heroes</h3>
+                <p>Ninjas vs enemigos.</p>
+                <button class="play-button" onclick="openGameModal('Ninja Clash Heroes', 'https://www.crazygames.com/embed/ninja-clash-heroes')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="time-shooter-2.jpg" alt="Time Shooter 2">
+                <h3>Time Shooter 2</h3>
+                <p>Shooter con tiempo lento.</p>
+                <button class="play-button" onclick="openGameModal('Time Shooter 2', 'https://www.crazygames.com/embed/time-shooter-2')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="stickman-supreme-duelist.jpg" alt="Stickman Supreme Duelist">
+                <h3>Stickman Supreme Duelist</h3>
+                <p>Peleas stickman.</p>
+                <button class="play-button" onclick="openGameModal('Stickman Supreme Duelist', 'https://www.crazygames.com/embed/stickman-supreme-duelist')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="gangster-vegas.jpg" alt="Gangster Vegas">
+                <h3>Gangster Vegas</h3>
+                <p>Acción criminal.</p>
+                <button class="play-button" onclick="openGameModal('Gangster Vegas', 'https://www.crazygames.com/embed/gangster-vegas')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="pixel-warfare.jpg" alt="Pixel Warfare">
+                <h3>Pixel Warfare</h3>
+                <p>Shooter estilo Minecraft.</p>
+                <button class="play-button" onclick="openGameModal('Pixel Warfare', 'https://www.crazygames.com/embed/pixel-warfare')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="assault-bots.jpg" alt="Assault Bots">
+                <h3>Assault Bots</h3>
+                <p>Robots y disparos.</p>
+                <button class="play-button" onclick="openGameModal('Assault Bots', 'https://www.crazygames.com/embed/assault-bots')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Carreras</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="racing-horizon.jpg" alt="Racing Horizon">
+                <h3>Racing Horizon</h3>
+                <p>Carreras urbanas.</p>
+                <button class="play-button" onclick="openGameModal('Racing Horizon', 'https://www.crazygames.com/embed/racing-horizon')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="drift-boss.jpg" alt="Drift Boss">
+                <h3>Drift Boss</h3>
+                <p>Drifting infinito.</p>
+                <button class="play-button" onclick="openGameModal('Drift Boss', 'https://www.crazygames.com/embed/drift-boss')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="highway-racer.jpg" alt="Highway Racer">
+                <h3>Highway Racer</h3>
+                <p>Carreras en autopista.</p>
+                <button class="play-button" onclick="openGameModal('Highway Racer', 'https://www.crazygames.com/embed/highway-racer')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="moto-x3m.jpg" alt="Moto X3M">
+                <h3>Moto X3M</h3>
+                <p>Motos y obstáculos.</p>
+                <button class="play-button" onclick="openGameModal('Moto X3M', 'https://www.crazygames.com/embed/moto-x3m')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="burnout-drift.jpg" alt="Burnout Drift">
+                <h3>Burnout Drift</h3>
+                <p>Drifting extremo.</p>
+                <button class="play-button" onclick="openGameModal('Burnout Drift', 'https://www.crazygames.com/embed/burnout-drift')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="rally-champion.jpg" alt="Rally Champion">
+                <h3>Rally Champion</h3>
+                <p>Rally realista.</p>
+                <button class="play-button" onclick="openGameModal('Rally Champion', 'https://www.crazygames.com/embed/rally-champion')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="speed-racing-pro-2.jpg" alt="Speed Racing Pro 2">
+                <h3>Speed Racing Pro 2</h3>
+                <p>Velocidad pura.</p>
+                <button class="play-button" onclick="openGameModal('Speed Racing Pro 2', 'https://www.crazygames.com/embed/speed-racing-pro-2')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="car-crash-simulator.jpg" alt="Car Crash Simulator">
+                <h3>Car Crash Simulator</h3>
+                <p>Choques locos.</p>
+                <button class="play-button" onclick="openGameModal('Car Crash Simulator', 'https://www.crazygames.com/embed/car-crash-simulator')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="monster-truck-racing.jpg" alt="Monster Truck Racing">
+                <h3>Monster Truck Racing</h3>
+                <p>Camionetas monstruo.</p>
+                <button class="play-button" onclick="openGameModal('Monster Truck Racing', 'https://www.crazygames.com/embed/monster-truck-racing')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="madalin-stunt-cars-2.jpg" alt="Madalin Stunt Cars 2">
+                <h3>Madalin Stunt Cars 2</h3>
+                <p>Acrobacias.</p>
+                <button class="play-button" onclick="openGameModal('Madalin Stunt Cars 2', 'https://www.crazygames.com/embed/madalin-stunt-cars-2')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="city-bike-stunt-2.jpg" alt="City Bike Stunt 2">
+                <h3>City Bike Stunt 2</h3>
+                <p>Motos urbanas.</p>
+                <button class="play-button" onclick="openGameModal('City Bike Stunt 2', 'https://www.crazygames.com/embed/city-bike-stunt-2')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="extreme-car-driving-simulator.jpg" alt="Extreme Car Driving Simulator">
+                <h3>Extreme Car Driving Simulator</h3>
+                <p>Conducción libre.</p>
+                <button class="play-button" onclick="openGameModal('Extreme Car Driving Simulator', 'https://www.crazygames.com/embed/extreme-car-driving-simulator')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Deportes</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="basketball-stars.jpg" alt="Basketball Stars">
+                <h3>Basketball Stars</h3>
+                <p>Básquet 1v1.</p>
+                <button class="play-button" onclick="openGameModal('Basketball Stars', 'https://www.crazygames.com/embed/basketball-stars')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="soccer-random.jpg" alt="Soccer Random">
+                <h3>Soccer Random</h3>
+                <p>Fútbol caótico.</p>
+                <button class="play-button" onclick="openGameModal('Soccer Random', 'https://www.crazygames.com/embed/soccer-random')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="tennis-masters.jpg" alt="Tennis Masters">
+                <h3>Tennis Masters</h3>
+                <p>Tenis arcade.</p>
+                <button class="play-button" onclick="openGameModal('Tennis Masters', 'https://www.crazygames.com/embed/tennis-masters')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="football-legends-2021.jpg" alt="Football Legends 2021">
+                <h3>Football Legends 2021</h3>
+                <p>Fútbol épico.</p>
+                <button class="play-button" onclick="openGameModal('Football Legends 2021', 'https://www.crazygames.com/embed/football-legends-2021')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="golf-orbit.jpg" alt="Golf Orbit">
+                <h3>Golf Orbit</h3>
+                <p>Golf extremo.</p>
+                <button class="play-button" onclick="openGameModal('Golf Orbit', 'https://www.crazygames.com/embed/golf-orbit')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="boxing-random.jpg" alt="Boxing Random">
+                <h3>Boxing Random</h3>
+                <p>Boxeo loco.</p>
+                <button class="play-button" onclick="openGameModal('Boxing Random', 'https://www.crazygames.com/embed/boxing-random')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="volley-random.jpg" alt="Volley Random">
+                <h3>Volley Random</h3>
+                <p>Vóley impredecible.</p>
+                <button class="play-button" onclick="openGameModal('Volley Random', 'https://www.crazygames.com/embed/volley-random')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="stickman-skate.jpg" alt="Stickman Skate">
+                <h3>Stickman Skate</h3>
+                <p>Skate con stickman.</p>
+                <button class="play-button" onclick="openGameModal('Stickman Skate', 'https://www.crazygames.com/embed/stickman-skate')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="mini-golf-club.jpg" alt="Mini Golf Club">
+                <h3>Mini Golf Club</h3>
+                <p>Golf miniatura.</p>
+                <button class="play-button" onclick="openGameModal('Mini Golf Club', 'https://www.crazygames.com/embed/mini-golf-club')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="baseball-fury.jpg" alt="Baseball Fury">
+                <h3>Baseball Fury</h3>
+                <p>Béisbol destructivo.</p>
+                <button class="play-button" onclick="openGameModal('Baseball Fury', 'https://www.crazygames.com/embed/baseball-fury')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="ragdoll-archers.jpg" alt="Ragdoll Archers">
+                <h3>Ragdoll Archers</h3>
+                <p>Tiro con arco ragdoll.</p>
+                <button class="play-button" onclick="openGameModal('Ragdoll Archers', 'https://www.crazygames.com/embed/ragdoll-archers')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="pool-8-ball-mania.jpg" alt="Pool 8 Ball Mania">
+                <h3>Pool 8 Ball Mania</h3>
+                <p>Billar clásico.</p>
+                <button class="play-button" onclick="openGameModal('Pool 8 Ball Mania', 'https://www.crazygames.com/embed/pool-8-ball-mania')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Puzles</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="cut-the-rope.jpg" alt="Cut the Rope">
+                <h3>Cut the Rope</h3>
+                <p>Corta la cuerda.</p>
+                <button class="play-button" onclick="openGameModal('Cut the Rope', 'https://www.crazygames.com/embed/cut-the-rope')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="fireboy-watergirl.jpg" alt="Fireboy and Watergirl">
+                <h3>Fireboy and Watergirl</h3>
+                <p>Puzle cooperativo.</p>
+                <button class="play-button" onclick="openGameModal('Fireboy and Watergirl', 'https://www.crazygames.com/embed/fireboy-and-watergirl')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="mahjong-classic.jpg" alt="Mahjong Classic">
+                <h3>Mahjong Classic</h3>
+                <p>Mahjong tradicional.</p>
+                <button class="play-button" onclick="openGameModal('Mahjong Classic', 'https://www.crazygames.com/embed/mahjong-classic')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="bubble-shooter.jpg" alt="Bubble Shooter">
+                <h3>Bubble Shooter</h3>
+                <p>Dispara burbujas.</p>
+                <button class="play-button" onclick="openGameModal('Bubble Shooter', 'https://www.crazygames.com/embed/bubble-shooter')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="candy-crush-saga.jpg" alt="Candy Crush Saga">
+                <h3>Candy Crush Saga</h3>
+                <p>Combina caramelos.</p>
+                <button class="play-button" onclick="openGameModal('Candy Crush Saga', 'https://www.crazygames.com/embed/candy-crush-saga')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="jigsaw-puzzle-deluxe.jpg" alt="Jigsaw Puzzle Deluxe">
+                <h3>Jigsaw Puzzle Deluxe</h3>
+                <p>Rompecabezas.</p>
+                <button class="play-button" onclick="openGameModal('Jigsaw Puzzle Deluxe', 'https://www.crazygames.com/embed/jigsaw-puzzle-deluxe')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="sudoku-classic.jpg" alt="Sudoku Classic">
+                <h3>Sudoku Classic</h3>
+                <p>Sudoku puro.</p>
+                <button class="play-button" onclick="openGameModal('Sudoku Classic', 'https://www.crazygames.com/embed/sudoku-classic')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="unblock-it.jpg" alt="Unblock It">
+                <h3>Unblock It</h3>
+                <p>Desbloquea madera.</p>
+                <button class="play-button" onclick="openGameModal('Unblock It', 'https://www.crazygames.com/embed/unblock-it')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="merge-fruit.jpg" alt="Merge Fruit">
+                <h3>Merge Fruit</h3>
+                <p>Combina frutas.</p>
+                <button class="play-button" onclick="openGameModal('Merge Fruit', 'https://www.crazygames.com/embed/merge-fruit')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="hex-frvr.jpg" alt="Hex FRVR">
+                <h3>Hex FRVR</h3>
+                <p>Puzle hexagonal.</p>
+                <button class="play-button" onclick="openGameModal('Hex FRVR', 'https://www.crazygames.com/embed/hex-frvr')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="tetris.jpg" alt="Tetris">
+                <h3>Tetris</h3>
+                <p>Clásico de bloques.</p>
+                <button class="play-button" onclick="openGameModal('Tetris', 'https://www.crazygames.com/embed/tetris')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="words-of-wonders.jpg" alt="Words of Wonders">
+                <h3>Words of Wonders</h3>
+                <p>Palabras cruzadas.</p>
+                <button class="play-button" onclick="openGameModal('Words of Wonders', 'https://www.crazygames.com/embed/words-of-wonders')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Multijugador</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="kirka-io.jpg" alt="Kirka.io">
+                <h3>Kirka.io</h3>
+                <p>FPS voxelado.</p>
+                <button class="play-button" onclick="openGameModal('Kirka.io', 'https://kirka.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="agar-io.jpg" alt="Agar.io">
+                <h3>Agar.io</h3>
+                <p>Come y crece.</p>
+                <button class="play-button" onclick="openGameModal('Agar.io', 'https://agar.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="among-us-online.jpg" alt="Among Us Online">
+                <h3>Among Us Online</h3>
+                <p>Impostores online.</p>
+                <button class="play-button" onclick="openGameModal('Among Us Online', 'https://www.crazygames.com/embed/among-us-online')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="hole-io.jpg" alt="Hole.io">
+                <h3>Hole.io</h3>
+                <p>Traga todo.</p>
+                <button class="play-button" onclick="openGameModal('Hole.io', 'https://hole-io.com/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="evowars-io.jpg" alt="EvoWars.io">
+                <h3>EvoWars.io</h3>
+                <p>Evoluciona peleando.</p>
+                <button class="play-button" onclick="openGameModal('EvoWars.io', 'https://www.crazygames.com/embed/evowars-io')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="lordz-io.jpg" alt="Lordz.io">
+                <h3>Lordz.io</h3>
+                <p>Conquista medieval.</p>
+                <button class="play-button" onclick="openGameModal('Lordz.io', 'https://lordz.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="wormate-io.jpg" alt="Wormate.io">
+                <h3>Wormate.io</h3>
+                <p>Gusano glotón.</p>
+                <button class="play-button" onclick="openGameModal('Wormate.io', 'https://wormate.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="build-royale.jpg" alt="Build Royale">
+                <h3>Build Royale</h3>
+                <p>Battle royale constructor.</p>
+                <button class="play-button" onclick="openGameModal('Build Royale', 'https://www.crazygames.com/embed/build-royale')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="zombs-royale.jpg" alt="Zombs Royale">
+                <h3>Zombs Royale</h3>
+                <p>Supervivencia zombi.</p>
+                <button class="play-button" onclick="openGameModal('Zombs Royale', 'https://zombsroyale.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="paper-io-3d.jpg" alt="Paper.io 3D">
+                <h3>Paper.io 3D</h3>
+                <p>Territorio 3D.</p>
+                <button class="play-button" onclick="openGameModal('Paper.io 3D', 'https://www.crazygames.com/embed/paper-io-3d')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="mini-royale.jpg" alt="Mini Royale">
+                <h3>Mini Royale</h3>
+                <p>Battle royale mini.</p>
+                <button class="play-button" onclick="openGameModal('Mini Royale', 'https://www.crazygames.com/embed/mini-royale')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+            <div class="game-card">
+                <img src="surviv-io.jpg" alt="Surviv.io">
+                <h3>Surviv.io</h3>
+                <p>Supervivencia rápida.</p>
+                <button class="play-button" onclick="openGameModal('Surviv.io', 'https://surviv.io/')">
+                    <i class="fas fa-play"></i> Jugar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalGameTitle">Título del Juego</h2>
+                <button class="close-modal" onclick="closeGameModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <iframe id="gameIframe" class="game-iframe" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openGameModal(title, url) {
+            const modal = document.getElementById('gameModal');
+            const iframe = document.getElementById('gameIframe');
+            const modalTitle = document.getElementById('modalGameTitle');
+            modalTitle.textContent = title;
+            iframe.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function closeGameModal() {
+            const modal = document.getElementById('gameModal');
+            const iframe = document.getElementById('gameIframe');
+            modal.style.display = 'none';
+            iframe.src = '';
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeGameModal();
+        });
+
+        document.getElementById('gameModal').addEventListener('click', (event) => {
+            if (event.target === document.getElementById('gameModal')) closeGameModal();
+        });
+    </script>
+</body>
+</html>
